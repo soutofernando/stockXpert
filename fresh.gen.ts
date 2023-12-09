@@ -9,6 +9,7 @@ import * as $auth_middleware from "./routes/auth/_middleware.ts";
 import * as $auth_secret from "./routes/auth/secret.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
+import * as $products from "./routes/products.tsx";
 import * as $register_product from "./routes/register_product.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $Counter from "./islands/Counter.tsx";
@@ -23,6 +24,7 @@ const manifest = {
     "./routes/auth/secret.tsx": $auth_secret,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
+    "./routes/products.tsx": $products,
     "./routes/register_product.tsx": $register_product,
     "./routes/signup.tsx": $signup,
   },
