@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import type { State } from "./_middleware.ts";
-import ListProducts from "../components/product/ListProducts.tsx";
+import type { State } from "../_middleware.ts";
+import ListProducts from "../../components/product/ListProducts.tsx";
 
 export const handler: Handlers<any, State> = {
    async GET(_req, ctx){

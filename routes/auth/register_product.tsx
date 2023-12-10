@@ -1,6 +1,6 @@
-import RegisterProduct from "../components/product/RegisterProduct.tsx"
+import RegisterProduct from "../../components/product/RegisterProduct.tsx"
 import { Handlers, PageProps } from "$fresh/server.ts";
-import type { State } from "./_middleware.ts";
+import type { State } from "../_middleware.ts";
 
 
 export const handler: Handlers<any, State> = {

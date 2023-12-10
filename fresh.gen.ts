@@ -6,11 +6,11 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $auth_middleware from "./routes/auth/_middleware.ts";
+import * as $auth_products from "./routes/auth/products.tsx";
+import * as $auth_register_product from "./routes/auth/register_product.tsx";
 import * as $auth_secret from "./routes/auth/secret.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
-import * as $products from "./routes/products.tsx";
-import * as $register_product from "./routes/register_product.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import { type Manifest } from "$fresh/server.ts";
@@ -21,11 +21,11 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
     "./routes/auth/_middleware.ts": $auth_middleware,
+    "./routes/auth/products.tsx": $auth_products,
+    "./routes/auth/register_product.tsx": $auth_register_product,
     "./routes/auth/secret.tsx": $auth_secret,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
-    "./routes/products.tsx": $products,
-    "./routes/register_product.tsx": $register_product,
     "./routes/signup.tsx": $signup,
   },
   islands: {
