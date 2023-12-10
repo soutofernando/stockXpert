@@ -9,7 +9,7 @@ export default function ListProducts(props: PageProps) {
       <div class="container mx-auto px-4 sm:px-8">
         <div class="py-8">
           <div>
-            <h2 class="text-2xl font-semibold leading-tight">Users</h2>
+            <h2 class="text-2xl font-semibold leading-tight">Produtos</h2>
           </div>
           <div class="my-2 flex sm:flex-row flex-col">
             <div class="flex flex-row mb-1 sm:mb-0">

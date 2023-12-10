@@ -1,7 +1,6 @@
 import RegisterProduct from "../../components/product/RegisterProduct.tsx"
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 import type { State } from "../_middleware.ts";
-
 
 export const handler: Handlers<any, State> = {
    async POST(_req, ctx){
