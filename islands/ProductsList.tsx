@@ -203,7 +203,7 @@ export default function ProductsList(props: PageProps) {
               for="name"
               class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
             >
-              Owner Name
+              Product
             </label>
             <input
               id="name"
@@ -214,7 +214,7 @@ export default function ProductsList(props: PageProps) {
               for="email2"
               class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
             >
-              Card Number
+              Quantity
             </label>
             <div class="relative mb-5 mt-2">
               <div class="absolute text-gray-600 flex items-center px-4 border-r h-full">
@@ -247,7 +247,7 @@ export default function ProductsList(props: PageProps) {
               for="expiry"
               class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
             >
-              Expiry Date
+              expory
             </label>
             <div class="relative mb-5 mt-2">
               <div class="absolute right-0 text-gray-600 flex items-center pr-3 h-full cursor-pointer">
@@ -313,7 +313,10 @@ export default function ProductsList(props: PageProps) {
               <button class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">
                 Submit
               </button>
-              <button onClick={() => open.value = false} class="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
+              <button
+                onClick={() => open.value = false}
+                class="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm"
+              >
                 Cancel
               </button>
             </div>
