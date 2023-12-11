@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import type { State } from "../_middleware.ts";
-import ListProducts from "../../components/product/ListProducts.tsx";
+import ProductsList from "../../islands/ProductsList.tsx";
 
 export const handler: Handlers<any, State> = {
    async GET(_req, ctx){
@@ -16,6 +16,6 @@ export const handler: Handlers<any, State> = {
    }
   };
 
-export default function Greet (props: PageProps) {
-    return <ListProducts {...props} />
+export default function products (props: PageProps) {
+    return <ProductsList {... props} />
 }

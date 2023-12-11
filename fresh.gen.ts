@@ -12,7 +12,7 @@ import * as $auth_secret from "./routes/auth/secret.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $signup from "./routes/signup.tsx";
-import * as $Counter from "./islands/Counter.tsx";
+import * as $ProductsList from "./islands/ProductsList.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -29,7 +29,7 @@ const manifest = {
     "./routes/signup.tsx": $signup,
   },
   islands: {
-    "./islands/Counter.tsx": $Counter,
+    "./islands/ProductsList.tsx": $ProductsList,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
