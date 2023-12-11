@@ -197,7 +197,7 @@ export default function ProductsList(props: PageProps) {
               </svg>
             </div>
             <h1 class="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
-              Enter Billing Details
+              Enter 
             </h1>
             <label
               for="name"
