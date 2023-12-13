@@ -1,6 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import type { State } from "../_middleware.ts";
 import ProductsList from "../../islands/ProductsList.tsx";
+import Layout from "../../Layout.tsx";
 
 export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
@@ -64,5 +65,9 @@ export const handler: Handlers<any, State> = {
 };
 
 export default function products(props: PageProps) {
-  return <ProductsList {...props} />;
+  return (
+    <Layout>
+      <ProductsList {...props} />;
+    </Layout>
+  );
 }

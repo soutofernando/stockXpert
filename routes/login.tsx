@@ -2,6 +2,7 @@ import Login from "../components/login/Login.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import type { State } from "./_middleware.ts";
 import { setCookie } from "$std/http/cookie.ts";
+import Layout from "../Layout.tsx";
 
 export const handler: Handlers<any, State> = {
   async POST(_req, ctx) {
@@ -30,6 +31,10 @@ export const handler: Handlers<any, State> = {
   },
 };
 
-export default function Greet(props: PageProps) {
-  return <Login {...props} />;
+export default function login(props: PageProps) {
+  return (
+    <Layout>
+      <Login {...props} />
+    </Layout>
+  );
 }

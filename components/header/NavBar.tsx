@@ -3,6 +3,7 @@ import Icon from "../../components/ui/Icon.tsx";
 const links = [
   { text: "Login", href: "/login" },
   { text: "Sobre Nós", href: "/sobre" },
+  { text: "Produtos", href: "/auth/products" },
 ];
 
 export default function NavBar() {
