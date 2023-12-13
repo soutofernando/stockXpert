@@ -32,6 +32,19 @@ export default function ProductsList(props: PageProps) {
     return response;
   };
 
+  const deleteProduct = async () => {
+    const response = await fetch("http://localhost:8000/auth/products", {
+      method: "DELETE",
+      body: JSON.stringify(modalValues.value.id),
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    }
+
+    return response;
+  };
+
   return (
     <div class="antialiased font-sans bg-gray-200">
       <div class="container mx-auto px-4 sm:px-8">
@@ -326,6 +339,14 @@ export default function ProductsList(props: PageProps) {
                 class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm"
               >
                 Atualizar Produto
+              </button>
+              <button
+                onClick={() => {
+                  deleteProduct();
+                }}
+                class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm"
+              >
+                Deletar Produto
               </button>
               <button
                 onClick={() => {

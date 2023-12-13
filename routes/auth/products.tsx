@@ -4,7 +4,6 @@ import ProductsList from "../../islands/ProductsList.tsx";
 
 export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
-    
     const { data, error } = await ctx.state.supabaseClient.from("Stock").select(
       "*",
     );
@@ -20,13 +19,11 @@ export const handler: Handlers<any, State> = {
 
   async PATCH(req, ctx) {
     try {
-      const body = await req.body;
-      console.log(body)      
+      const updateFilds = await req.json();
       const { error } = await ctx.state.supabaseClient
         .from("Stock")
-        .update({ product_name: "TEdsdSTE" })
-        .eq("id", 3);
-
+        .update(updateFilds)
+        .eq("id", updateFilds.id);
       const headers = new Headers();
       const redirect = "/auth/secret";
 
@@ -39,8 +36,28 @@ export const handler: Handlers<any, State> = {
         headers,
       });
     } catch (error) {
-      console.error("Erro:", error.message);
-      // Você pode querer retornar um código de erro ou fazer um tratamento apropriado aqui
+      return new Response(null, { status: 500 });
+    }
+  },
+  async DELETE(req, ctx) {
+    try {
+      const id = await req.json();
+      const { error } = await ctx.state.supabaseClient
+        .from("Stock")
+        .delete()
+        .eq("id", id);
+      const headers = new Headers();
+      const redirect = "/auth/secret";
+
+      if (!error) {
+        headers.set("location", redirect);
+      }
+
+      return new Response(null, {
+        status: 200,
+        headers,
+      });
+    } catch (error) {
       return new Response(null, { status: 500 });
     }
   },
