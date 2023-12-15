@@ -8,7 +8,7 @@ export default function ProductsList(props: PageProps) {
   const colums = Object.keys(data.data[0]);
   const open = useSignal(false);
   const modalValues = useSignal({});
-  const selectValue = useSignal("");
+  const selectValue = useSignal("entrada");
   const updateTypeValue = useSignal(0);
 
   if (IS_BROWSER) {
@@ -17,17 +17,17 @@ export default function ProductsList(props: PageProps) {
     if (entradaButton && saidaButton) {
       entradaButton.addEventListener("click", () => {
         entradaButton.style.backgroundColor = "black";
-        entradaButton.style.color ="white"
+        entradaButton.style.color = "white";
         saidaButton.style.backgroundColor = "white";
-        saidaButton.style.color = "black"
+        saidaButton.style.color = "black";
       });
     }
     if (entradaButton && saidaButton) {
       saidaButton.addEventListener("click", () => {
         entradaButton.style.backgroundColor = "white";
-        saidaButton.style.color ="white"
+        saidaButton.style.color = "white";
         saidaButton.style.backgroundColor = "black";
-       entradaButton.style.color ="black"
+        entradaButton.style.color = "black";
       });
     }
   }
@@ -341,7 +341,9 @@ export default function ProductsList(props: PageProps) {
 
               <div id="toggle-buttons" class="gap-3 flex flex-row">
                 <button
-                  class="h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2 active:bg-black"
+                  class={`h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2 ${
+                    selectValue.value == "entrada" ? "bg-black text-white" : ""
+                  }`}
                   id="entrada"
                   onClick={() => selectValue.value = "entrada"}
                 >
