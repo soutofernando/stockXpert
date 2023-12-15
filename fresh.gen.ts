@@ -6,6 +6,8 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $auth_middleware from "./routes/auth/_middleware.ts";
+import * as $auth_payments from "./routes/auth/payments.tsx";
+import * as $auth_people from "./routes/auth/people.tsx";
 import * as $auth_products from "./routes/auth/products.tsx";
 import * as $auth_register_product from "./routes/auth/register_product.tsx";
 import * as $auth_secret from "./routes/auth/secret.tsx";
@@ -21,6 +23,8 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
     "./routes/auth/_middleware.ts": $auth_middleware,
+    "./routes/auth/payments.tsx": $auth_payments,
+    "./routes/auth/people.tsx": $auth_people,
     "./routes/auth/products.tsx": $auth_products,
     "./routes/auth/register_product.tsx": $auth_register_product,
     "./routes/auth/secret.tsx": $auth_secret,

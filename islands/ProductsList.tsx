@@ -8,13 +8,27 @@ export default function ProductsList(props: PageProps) {
   const colums = Object.keys(data.data[0]);
   const open = useSignal(false);
   const modalValues = useSignal({});
-  const selectValue = useSignal("entrada");
+  const selectValue = useSignal("");
   const updateTypeValue = useSignal(0);
 
   if (IS_BROWSER) {
-    const select = document.getElementById("updateType") as HTMLSelectElement;
-    if (select) {
-      selectValue.value = select.value;
+    const entradaButton = document.getElementById("entrada");
+    const saidaButton = document.getElementById("saida");
+    if (entradaButton && saidaButton) {
+      entradaButton.addEventListener("click", () => {
+        entradaButton.style.backgroundColor = "black";
+        entradaButton.style.color ="white"
+        saidaButton.style.backgroundColor = "white";
+        saidaButton.style.color = "black"
+      });
+    }
+    if (entradaButton && saidaButton) {
+      saidaButton.addEventListener("click", () => {
+        entradaButton.style.backgroundColor = "white";
+        saidaButton.style.color ="white"
+        saidaButton.style.backgroundColor = "black";
+       entradaButton.style.color ="black"
+      });
     }
   }
 
@@ -325,17 +339,22 @@ export default function ProductsList(props: PageProps) {
                 Entrada / Saída:
               </label>
 
-              <select
-                id="updateType"
-                class="h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2"
-              >
-                <option value="entrada">
+              <div id="toggle-buttons" class="gap-3 flex flex-row">
+                <button
+                  class="h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2 active:bg-black"
+                  id="entrada"
+                  onClick={() => selectValue.value = "entrada"}
+                >
                   Entrada
-                </option>
-                <option value="saida" selected>
+                </button>
+                <button
+                  class="h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2"
+                  id="saida"
+                  onClick={() => selectValue.value = "saida"}
+                >
                   Saída
-                </option>
-              </select>
+                </button>
+              </div>
             </div>
 
             <label
