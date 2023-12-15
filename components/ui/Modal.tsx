@@ -29,7 +29,7 @@ function Modal(props: Props) {
   }, [open]);
 
   return (
-    <div id={id} class={`py-12 bg-black bg-opacity-20 transition duration-150 ease-in-out z-10 absolute top-0 bottom-0 left-0 right-0 ${open ? "opacity-100 flex" : "opacity-0 invisible"}`}>
+    <div id={id} class={`py-12 bg-black bg-opacity-20 w-screen h-screen transition duration-150 ease-in-out z-10 absolute top-0 bottom-0 left-0 right-0 ${open ? "opacity-100 flex" : "opacity-0 invisible"}`}>
       {children}
     </div>
   );

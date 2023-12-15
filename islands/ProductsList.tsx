@@ -1,28 +1,46 @@
 import { PageProps } from "$fresh/server.ts";
 import { useSignal } from "@preact/signals";
 import Modal from "../components/ui/Modal.tsx";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 export default function ProductsList(props: PageProps) {
   const { data } = props;
   const colums = Object.keys(data.data[0]);
   const open = useSignal(false);
   const modalValues = useSignal({});
+  const selectValue = useSignal("entrada");
+  const updateTypeValue = useSignal(0);
 
-  const newForm = () => {
-    const form = new FormData();
-    form.append("product_name", modalValues.value.product_name);
-    form.append("description", modalValues.value.description);
-    form.append("entry", modalValues.value.entry);
-    form.append("exit", modalValues.value.exit);
-
-    return form;
-  };
+  if (IS_BROWSER) {
+    const select = document.getElementById("updateType") as HTMLSelectElement;
+    if (select) {
+      selectValue.value = select.value;
+    }
+  }
 
   const updateProduct = async () => {
+    const quantity = selectValue.value == "entrada"
+      ? modalValues.value.quantity += updateTypeValue.value
+      : modalValues.value.quantity -= updateTypeValue.value;
+    const entry = selectValue.value == "entrada"
+      ? modalValues.value.entry += updateTypeValue.value
+      : modalValues.value.entry;
+    const exit = selectValue.value == "saida"
+      ? modalValues.value.exit += updateTypeValue.value
+      : modalValues.value.exit;
+    const newProduct = {
+      id: modalValues.value.id,
+      product_name: modalValues.value.product_name,
+      description: modalValues.value.description,
+      quantity: quantity,
+      entry: entry,
+      exit: exit,
+    };
+
     const response = await fetch("http://localhost:8000/auth/products", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(modalValues.value),
+      body: JSON.stringify(newProduct),
     });
 
     if (response.ok) {
@@ -217,7 +235,10 @@ export default function ProductsList(props: PageProps) {
       <Modal
         open={open.value}
       >
-        <div role="alert" class="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+        <div
+          role="alert"
+          class="container mx-auto w-11/12 md:w-2/3 max-w-lg rounded-lg"
+        >
           <div
             id="editProduct"
             class="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400"
@@ -264,7 +285,7 @@ export default function ProductsList(props: PageProps) {
                   ?.value}
               value={modalValues.value.product_name}
               id="productName"
-              class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+              class="mb-2 mt-2 text-gray-600 focus:outline-none focus:border focus:border-black font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
               placeholder="Ex: Bota"
             />
             <label
@@ -280,7 +301,7 @@ export default function ProductsList(props: PageProps) {
                   ?.value}
               value={modalValues.value.description}
               id="description"
-              class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+              class="text-gray-600 mb-2 focus:outline-none focus:border focus:border-black font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
               placeholder="Ex: Tamnho 42"
             />
             <label
@@ -291,44 +312,49 @@ export default function ProductsList(props: PageProps) {
             </label>
             <span
               id="quantity"
-              class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+              class="text-gray-600 mb-2 cursor-not-allowed max-w-[80px] focus:outline-none focus:border focus:border-black font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
               placeholder="Ex: 2"
             >
               {modalValues.value.quantity}
             </span>
+            <div class="flex flex-col">
+              <label
+                for="select"
+                class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
+              >
+                Entrada / Saída:
+              </label>
+
+              <select
+                id="updateType"
+                class="h-10 pl-3 pr-3 border-gray-300 rounded border max-w-[120px] mb-2"
+              >
+                <option value="entrada">
+                  Entrada
+                </option>
+                <option value="saida" selected>
+                  Saída
+                </option>
+              </select>
+            </div>
 
             <label
-              for="expiry"
+              for="select"
               class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
             >
-              Entrada
+              Quantidade:
             </label>
 
             <input
               onChange={(e) =>
-                modalValues.value.entry = (e.target as HTMLInputElement)
-                  ?.value}
-              value={modalValues.value.entry}
-              id="entry"
-              class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-              placeholder="Ex: 5"
-            />
-
-            <label
-              for="expiry"
-              class="text-gray-800 text-sm font-bold leading-tight tracking-normal"
-            >
-              Saída
-            </label>
-
-            <input
-              onChange={(e) =>
-                modalValues.value.exit = (e.target as HTMLInputElement)
-                  ?.value}
-              value={modalValues.value.exit}
-              id="entry"
-              class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-              placeholder="Ex: 5"
+                updateTypeValue.value = parseInt(
+                  (e.target as HTMLInputElement)
+                    ?.value,
+                )}
+              id="updateTypeValue"
+              type="number"
+              class="text-gray-600 max-w-[80px] mb-2 focus:outline-none focus:border focus:border-black font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+              placeholder="Ex: 2"
             />
 
             <div class="flex items-center justify-start w-full pt-6">
@@ -336,7 +362,7 @@ export default function ProductsList(props: PageProps) {
                 onClick={() => {
                   updateProduct();
                 }}
-                class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm"
+                class="focus:outline-none hover:bg-slate-900 focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out bg-black rounded text-white px-8 py-2 text-sm"
               >
                 Atualizar Produto
               </button>
@@ -344,19 +370,19 @@ export default function ProductsList(props: PageProps) {
                 onClick={() => {
                   deleteProduct();
                 }}
-                class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm"
+                class="focus:outline-none ml-3 hover:bg-red-400 focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out bg-red-600 rounded text-white px-8 py-2 text-sm"
               >
                 Deletar Produto
               </button>
-              <button
-                onClick={() => {
-                  open.value = false, modalValues.value = {};
-                }}
-                class="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm"
-              >
-                Cancelar
-              </button>
             </div>
+            <button
+              onClick={() => {
+                open.value = false, modalValues.value = {};
+              }}
+              class="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 mt-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm"
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </Modal>
