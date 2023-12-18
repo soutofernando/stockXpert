@@ -7,6 +7,7 @@ const links = [
 ];
 
 export default function NavBar() {
+  const logged = true;
   return (
     <nav class="bg-white px-4 lg:px-6 py-2.5 border-b">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
@@ -14,6 +15,13 @@ export default function NavBar() {
           <Icon id="Logo" class="w-44 h-[40px]" />
         </a>
         <div class="flex items-center lg:order-2">
+          {logged
+            ? (
+              <a href="/auth/dashboard" class="hidden lg:block mr-3 cursor-pointer py-2 pr-4 pl-3 rounded-lg transition-all duration-200 ease-in-out hover:text-white border border-black  hover:bg-black  bg-white text-gray-700 ">
+                Dashboard
+              </a>
+            )
+            : <div />}
           <a
             href="/login"
             class="hidden lg:block py-2 pr-4 pl-3 rounded-lg transition-all duration-200 ease-in-out hover:text-gray-700 border border-black  hover:bg-gray-200 lg:hover:bg-transparent bg-black text-white"

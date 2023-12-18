@@ -13,7 +13,7 @@ export default function Home(props: PageProps) {
     <div>
       <NavBar />
       {props.data.token
-        ? <a href="/auth/secret">Logar</a>
+        ? <a href="/auth/dashboard">Dashboard</a>
         : "Voce não está logado"}
     </div>
   );
