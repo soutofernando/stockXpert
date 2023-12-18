@@ -15,7 +15,7 @@ export const handler: Handlers<any, State> = {
     }
 
     headers.set("location", redirect);
-    return await ctx.render({ data });
+    return await ctx.render(data);
   },
 
   async PATCH(req, ctx) {

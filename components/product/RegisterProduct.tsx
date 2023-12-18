@@ -1,9 +1,10 @@
-export default function RegisterProduct (){
-    return (<div class="max-w-[400px]">
-        <form method="POST">
+export default function RegisterProduct() {
+  return (
+    <div class="max-w-[400px] mx-auto py-8">
+      <form method="POST">
         <div>
           <label for="productName" class="block mb-2 text-sm font-medium">
-            Product Name
+            Nome do Produto
           </label>
           <input
             type="text"
@@ -15,7 +16,7 @@ export default function RegisterProduct (){
         </div>
         <div>
           <label for="description" class="block mb-2 text-sm font-medium">
-            Description
+            Descrição
           </label>
           <input
             type="text"
@@ -27,7 +28,7 @@ export default function RegisterProduct (){
         </div>
         <div>
           <label for="quantity" class="block mb-2 text-sm font-medium">
-            Quantity
+            Quantidade
           </label>
           <input
             type="number"
@@ -37,14 +38,14 @@ export default function RegisterProduct (){
             class="border border-gray-300 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        
 
         <button
           type="submit"
-          class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="w-full mt-4 text-white bg-black  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
-          Register
+          Registrar
         </button>
-        </form>
-    </div>)
+      </form>
+    </div>
+  );
 }

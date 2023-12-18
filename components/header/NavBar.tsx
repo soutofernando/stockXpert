@@ -8,7 +8,7 @@ const links = [
 
 export default function NavBar() {
   return (
-    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
+    <nav class="bg-white px-4 lg:px-6 py-2.5 border-b">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <a href="/" class="flex items-center">
           <Icon id="Logo" class="w-44 h-[40px]" />
