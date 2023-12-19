@@ -7,6 +7,10 @@ export type AvailableIcons =
   | "Users"
   | "Dashboard"
   | "Checkup"
+  | "ArrowDown"
+  | "ArrowUp"
+  | "ArrowBack"
+  | "CicleX"
 
 interface Props extends JSX.SVGAttributes<SVGSVGElement> {
   /**

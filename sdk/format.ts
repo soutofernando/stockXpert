@@ -21,3 +21,13 @@ export const formatPrice = (
   currency = "BRL",
   locale = "pt-BR",
 ) => price ? formatter(currency, locale).format(price) : null;
+
+export const formatDate = (date: string) => {
+  const data = new Date(date);
+  const day = String(data.getDate()).padStart(2, "0");
+  const month = String(data.getMonth() + 1).padStart(2, "0");
+  const year = data.getFullYear();
+  const hours = String(data.getHours()).padStart(2, '0');
+  const minutes: string = String(data.getMinutes()).padStart(2, '0');
+  return `${day}/${month}/${year} às ${hours}h e ${minutes}min`;
+};

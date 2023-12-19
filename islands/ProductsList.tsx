@@ -2,6 +2,8 @@ import { PageProps } from "$fresh/server.ts";
 import { useSignal } from "@preact/signals";
 import Modal from "../components/ui/Modal.tsx";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { formatDate } from "../sdk/format.ts";
+
 
 export default function ProductsList(props: PageProps) {
   const { data } = props;
@@ -181,7 +183,7 @@ export default function ProductsList(props: PageProps) {
                       {row.exit}
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                      {row.created_at}
+                      {formatDate(row.created_at)}
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       <button
