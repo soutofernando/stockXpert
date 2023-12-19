@@ -7,6 +7,13 @@ export default function PaymentsList(props: PageProps) {
   const { data } = props;
   const colums = Object.keys(data.data[0]);
   const updateStatus = useSignal({});
+  const canceledPayments = data.data.filter((payment) =>
+    payment.status == "cancelado"
+  );
+  const total = canceledPayments.reduce(
+    (acc: number, curr: any) => acc + curr.value,
+    0,
+  );
 
   const updatePayment = async () => {
     const update = {
@@ -103,6 +110,7 @@ export default function PaymentsList(props: PageProps) {
                       onClick={() => {
                         updateStatus.value = {
                           id: row.id,
+                          value: row.value,
                           status: row.status == "cancelado"
                             ? "completo"
                             : "cancelado",
@@ -127,10 +135,13 @@ export default function PaymentsList(props: PageProps) {
           </table>
         </div>
       </div>
-      <div class="flex flex-row items-center">
-        <span class="font-semibold mr-2">TOTAL:</span>
-        {formatPrice(data.total)}
-      </div>
+
+      <span class="text-lg font-normal text-gray-600">
+        Subtotal: {formatPrice(data.subtotal)}
+      </span>
+      <h1 class="text-xl font-semibold text-gray-800">
+        Total: {formatPrice(data.subtotal - total)}
+      </h1>
     </div>
   );
 }

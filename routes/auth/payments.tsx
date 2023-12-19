@@ -7,9 +7,9 @@ export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
     const { data } = await ctx.state.supabaseClient.from("Payments")
       .select("*");
-    const total = data?.reduce((acc: number, curr: any) => acc + curr.value, 0);
+    const subtotal = data?.reduce((acc: number, curr: any) => acc + curr.value, 0);
 
-    return ctx.render({data, total});
+    return ctx.render({data, subtotal});
   },
 
   async PATCH(req, ctx) {

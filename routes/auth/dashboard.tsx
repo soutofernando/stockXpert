@@ -7,7 +7,7 @@ export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
     const payments = await ctx.state.supabaseClient.from("Payments")
       .select("*");
-    const total = payments.data?.reduce(
+    const subtotal = payments.data?.reduce(
       (acc: number, curr: any) => acc + curr.value,
       0,
     );
@@ -16,16 +16,23 @@ export const handler: Handlers<any, State> = {
 
     return ctx.render({
       payments: payments.data,
-      total,
+      subtotal,
       products: products.data,
     });
   },
 };
 
 export default function dashboard(props: PageProps) {
-  const { payments, products, total } = props.data;
+  const { payments, products, subtotal } = props.data;
   const colums = Object.keys(products[0]).filter((colum) =>
     colum == "product_name" || colum == "quantity"
+  );
+  const canceledPayments = payments.filter((payment) =>
+    payment.status == "cancelado"
+  );
+  const total = canceledPayments.reduce(
+    (acc: number, curr: any) => acc + curr.value,
+    0,
   );
 
   return (
@@ -398,8 +405,11 @@ export default function dashboard(props: PageProps) {
                   </tbody>
                 </table>
                 <div class="my-8">
+                  <span class="text-lg font-normal text-gray-600">
+                    Subtotal: {formatPrice(subtotal)}
+                  </span>
                   <h1 class="text-xl font-semibold text-gray-800">
-                    TOTAL: {formatPrice(total)}
+                    Total: {formatPrice(subtotal - total)}
                   </h1>
                 </div>
                 <a
