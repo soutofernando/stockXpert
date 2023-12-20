@@ -5,11 +5,36 @@ import PaymentsList from "../../islands/PaymentsList.tsx";
 
 export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
+    // const body = _req.json();
     const { data } = await ctx.state.supabaseClient.from("Payments")
       .select("*");
-    const subtotal = data?.reduce((acc: number, curr: any) => acc + curr.value, 0);
+    const subtotal = data?.reduce(
+      (acc: number, curr: any) => acc + curr.value,
+      0,
+    );
 
-    return ctx.render({data, subtotal});
+    const startDate = new Date(`2023-11-01T00:00:00.000Z`).toISOString();
+    const endDate = new Date(`2023-12-01T00:00:00.000Z`).toISOString();
+
+    try {
+      const { data, error } = await ctx.state.supabaseClient
+        .from("Payments")
+        .select()
+        .gte("created_at", startDate) // Início do mês
+        .lt("created_at", endDate); // Início do próximo mês
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        console.log("Dados do mês:", data);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error.message);
+    }
+
+    return ctx.render({ data, subtotal });
   },
 
   async PATCH(req, ctx) {

@@ -21,7 +21,7 @@ export const handler: Handlers<any, State> = {
       });
     }
 
-    let redirect = "/";
+    let redirect = "/auth/dashboard";
     if (error) {
       redirect = `/login?error=${error.message}`;
     }
