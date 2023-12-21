@@ -5,36 +5,67 @@ import PaymentsList from "../../islands/PaymentsList.tsx";
 
 export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
-    // const body = _req.json();
-    const { data } = await ctx.state.supabaseClient.from("Payments")
-      .select("*");
-    const subtotal = data?.reduce(
-      (acc: number, curr: any) => acc + curr.value,
-      0,
-    );
+    const url = new URL(_req.url);
+    const queryParams = url.searchParams;
+    const valueStart = queryParams.get("month");
 
-    const startDate = new Date(`2023-11-01T00:00:00.000Z`).toISOString();
-    const endDate = new Date(`2023-12-01T00:00:00.000Z`).toISOString();
+    let startDate = "2023-01-01T00:00:00.000Z";
+    let endDate = "2024-01-01T00:00:00.000Z";
 
-    try {
-      const { data, error } = await ctx.state.supabaseClient
+    if (valueStart) {
+      const monthNumber = parseInt(valueStart);
+      startDate = new Date(
+        `2023-${
+          monthNumber < 10 ? `0${monthNumber}` : monthNumber
+        }-01T00:00:00.000Z`,
+      ).toISOString();
+
+      const nextMonth = monthNumber !== 12 ? monthNumber + 1 : 1;
+      endDate = new Date(
+        `202${monthNumber == 12 ? 4 : 3}-${nextMonth < 10 ? `0${nextMonth}` : nextMonth}-01T00:00:00.000Z`,
+      ).toISOString();
+    } else {
+      const { data: allData, error: allError } = await ctx.state.supabaseClient
         .from("Payments")
-        .select()
-        .gte("created_at", startDate) // Início do mês
-        .lt("created_at", endDate); // Início do próximo mês
+        .select("*");
 
-      if (error) {
-        throw error;
+      if (allError) {
+        throw allError;
       }
 
-      if (data) {
-        console.log("Dados do mês:", data);
+      let subtotal = 0;
+
+      if (allData && allData.length > 0) {
+        subtotal = allData.reduce(
+          (acc: number, curr: any) => acc + curr.value,
+          0,
+        );
       }
-    } catch (error) {
-      console.error("Erro ao buscar dados:", error.message);
+
+      return ctx.render({ data: allData, subtotal: subtotal });
     }
 
-    return ctx.render({ data, subtotal });
+    const { data, error } = await ctx.state.supabaseClient
+      .from("Payments")
+      .select()
+      .gte("created_at", startDate)
+      .lt("created_at", endDate);
+
+    if (error) {
+      throw error;
+    }
+
+    let subtotal = 0;
+    let errorMessage = "";
+
+    if (data && data.length > 0) {
+      subtotal = data.reduce((acc: number, curr: any) => acc + curr.value, 0);
+    } else {
+      
+      errorMessage = "Não há dados disponíveis para o mês selecionado.Por favor, selecione outro mês.";
+    }
+
+    return ctx.render({ data, subtotal, errorMessage });
   },
 
   async PATCH(req, ctx) {
